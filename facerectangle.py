@@ -1,5 +1,6 @@
 import face_recognition
 import cv2
+import pickle###########***********
 from PIL import Image,ImageDraw
 shah_image = face_recognition.load_image_file("shah.jpeg")
 rosh_image = face_recognition.load_image_file("rosh.jpg")
@@ -13,6 +14,9 @@ face_locations=face_recognition.face_locations(test_image)
 face_encodings = face_recognition.face_encodings(test_image,face_locations)
 pil_image=Image.fromarray(test_image)
 draw=ImageDraw.Draw(pil_image)
+with open('dataset.dat', 'wb') as f:###########***********
+    pickle.dump(face_encodings, f)###########***********
+
 for (top,right,bottom,left) ,face_encoding in zip(face_locations,face_encodings):
     matches=face_recognition.compare_faces(known_face_encodings,face_encoding)
     name="Unknown Person"
